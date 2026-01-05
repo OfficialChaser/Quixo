@@ -1,0 +1,86 @@
+[gd_scene load_steps=17 format=3 uid="uid://ditxvyhih2ou0"]
+
+[ext_resource type="Script" uid="uid://5a2fa8smi2gf" path="res://interactables/block/block.gd" id="1_4kun4"]
+[ext_resource type="Texture2D" uid="uid://ddv88pqjs5lqj" path="res://assets/block/empty-block.png" id="1_cgrg5"]
+[ext_resource type="Texture2D" uid="uid://5wcq4hsldx8" path="res://assets/block/o-block.png" id="2_4kun4"]
+[ext_resource type="Texture2D" uid="uid://be2bjf1odq1fq" path="res://assets/block/x-block.png" id="4_ojgcc"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ojgcc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_cgrg5")
+}],
+"loop": true,
+"name": &"empty",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_4kun4")
+}],
+"loop": true,
+"name": &"o",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_ojgcc")
+}],
+"loop": true,
+"name": &"x",
+"speed": 5.0
+}]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1bw7o"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bk4tb"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kfh62"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_om4np"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h23sc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0nnbb"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_iiloh"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_24uhq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6yb8a"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_p68qx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7n2m4"]
+
+[node name="Block" type="Node2D"]
+script = ExtResource("1_4kun4")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_ojgcc")
+animation = &"x"
+autoplay = "empty"
+
+[node name="Button" type="Button" parent="."]
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+theme_override_styles/normal = SubResource("StyleBoxEmpty_1bw7o")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_bk4tb")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_kfh62")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_om4np")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_h23sc")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_0nnbb")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_iiloh")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_24uhq")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_6yb8a")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_p68qx")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_7n2m4")
+toggle_mode = true
+metadata/_edit_use_anchors_ = true
+
+[connection signal="mouse_entered" from="Button" to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Button" to="." method="_on_mouse_exited"]
+[connection signal="toggled" from="Button" to="." method="_on_block_toggled"]

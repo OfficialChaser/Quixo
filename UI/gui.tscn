@@ -1,0 +1,57 @@
+[gd_scene load_steps=4 format=3 uid="uid://c8q22y3h8apvr"]
+
+[ext_resource type="Shader" uid="uid://dka6nsed01sx7" path="res://assets/shaders/font_outline.gdshader" id="1_efmwq"]
+[ext_resource type="Script" uid="uid://bp4e5xirvrh0k" path="res://UI/gui.gd" id="1_sj6ny"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mfius"]
+shader = ExtResource("1_efmwq")
+shader_parameter/amt = 0.52400002489
+
+[node name="GUI" type="Control"]
+custom_minimum_size = Vector2(17.14, 0)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_sj6ny")
+
+[node name="Title" type="Label" parent="."]
+material = SubResource("ShaderMaterial_mfius")
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 22.999989
+grow_horizontal = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 16
+text = "Quixo"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TurnLabel" type="Label" parent="."]
+material = SubResource("ShaderMaterial_mfius")
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -31.0
+offset_top = 21.0
+offset_right = 91.0
+offset_bottom = 37.0
+grow_horizontal = 2
+scale = Vector2(0.5, 0.5)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 16
+text = "Player 1's (X) turn"
+horizontal_alignment = 1
+vertical_alignment = 1

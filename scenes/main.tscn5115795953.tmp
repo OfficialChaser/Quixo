@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://cy7y21klixwsf"]
+
+[ext_resource type="Script" uid="uid://csr3b5kvmj5d1" path="res://scripts/board_manager.gd" id="1_o5qli"]
+[ext_resource type="PackedScene" uid="uid://ditxvyhih2ou0" path="res://scenes/block.tscn" id="2_0wfyh"]
+
+[node name="Main" type="Node2D"]
+
+[node name="BoardManager" type="Node2D" parent="."]
+position = Vector2(115, 59)
+script = ExtResource("1_o5qli")
+block_scene = ExtResource("2_0wfyh")

@@ -1,0 +1,17 @@
+[gd_scene load_steps=5 format=3 uid="uid://cy7y21klixwsf"]
+
+[ext_resource type="Script" uid="uid://csr3b5kvmj5d1" path="res://core/managers/board_manager.gd" id="1_o5qli"]
+[ext_resource type="PackedScene" uid="uid://ditxvyhih2ou0" path="res://interactables/block/block.tscn" id="2_0wfyh"]
+[ext_resource type="PackedScene" uid="uid://bik6pvc7jos8p" path="res://interactables/move_option/move_option.tscn" id="3_jyhfs"]
+[ext_resource type="PackedScene" uid="uid://c8q22y3h8apvr" path="res://scenes/gui.tscn" id="3_sugp2"]
+
+[node name="Main" type="Node2D"]
+
+[node name="BoardManager" type="Node2D" parent="."]
+script = ExtResource("1_o5qli")
+block_scene = ExtResource("2_0wfyh")
+move_option_scene = ExtResource("3_jyhfs")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="GUI" parent="CanvasLayer" instance=ExtResource("3_sugp2")]
