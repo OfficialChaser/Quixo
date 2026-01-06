@@ -1,11 +1,144 @@
-[gd_scene load_steps=4 format=3 uid="uid://c8q22y3h8apvr"]
+[gd_scene load_steps=13 format=3 uid="uid://c8q22y3h8apvr"]
 
 [ext_resource type="Shader" uid="uid://dka6nsed01sx7" path="res://assets/shaders/font_outline.gdshader" id="1_efmwq"]
 [ext_resource type="Script" uid="uid://bp4e5xirvrh0k" path="res://UI/gui.gd" id="1_sj6ny"]
+[ext_resource type="Shader" uid="uid://blxm8s0lpuqso" path="res://assets/shaders/blur.gdshader" id="3_cwd3r"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mfius"]
 shader = ExtResource("1_efmwq")
 shader_parameter/amt = 0.52400002489
+
+[sub_resource type="Animation" id="Animation_cwd3r"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_sj6ny"]
+resource_name = "fade_out"
+length = 0.5
+step = 0.0303
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(4.2870927, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yrla7"]
+_data = {
+&"RESET": SubResource("Animation_cwd3r"),
+&"fade_out": SubResource("Animation_sj6ny")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yrla7"]
+shader = ExtResource("3_cwd3r")
+shader_parameter/blur_strength = 4.0
+
+[sub_resource type="Animation" id="Animation_yrla7"]
+resource_name = "blur_in"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:material:shader_parameter/blur_strength")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 4.00000019]
+}
+
+[sub_resource type="Animation" id="Animation_ddble"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:material:shader_parameter/blur_strength")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [4.0]
+}
+
+[sub_resource type="Animation" id="Animation_6ujs1"]
+resource_name = "blur_out"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:material:shader_parameter/blur_strength")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [4.00000019, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wg577"]
+_data = {
+&"RESET": SubResource("Animation_ddble"),
+&"blur_in": SubResource("Animation_yrla7"),
+&"blur_out": SubResource("Animation_6ujs1")
+}
 
 [node name="GUI" type="Control"]
 custom_minimum_size = Vector2(17.14, 0)
@@ -48,6 +181,7 @@ offset_right = 91.0
 offset_bottom = 37.0
 grow_horizontal = 2
 scale = Vector2(0.5, 0.5)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 1
 theme_override_constants/shadow_offset_y = 1
@@ -55,3 +189,23 @@ theme_override_font_sizes/font_size = 16
 text = "Player 1's (X) turn"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="TurnLabel"]
+libraries = {
+&"": SubResource("AnimationLibrary_yrla7")
+}
+
+[node name="BlurRect" type="ColorRect" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_yrla7")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="BlurRect"]
+libraries = {
+&"": SubResource("AnimationLibrary_wg577")
+}

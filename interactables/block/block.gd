@@ -52,7 +52,7 @@ func update_button_status(selection := false):
 	if not selection:
 		update_selectability()
 	
-	if selectable:
+	if selectable and not play_state_manager.board_locked:
 		is_edge = true
 		button.mouse_filter = button.MOUSE_FILTER_STOP
 	else:

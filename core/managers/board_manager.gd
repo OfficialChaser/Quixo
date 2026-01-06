@@ -1,20 +1,22 @@
 class_name BoardManager
 extends Node2D
 
+# Board stats
 @export var grid_size := 5
-@export var cell_size := 18
+@export var cell_size := 18 # pixels above 16 = spacing
+var grid_pixel_size : Vector2
+var origin_offset : Vector2
 
+# References
 @export var block_scene: PackedScene
 @export var move_option_scene: PackedScene
 @export var play_state_manager: PlayStateManager
 var win_manager := WinManager.new()
 
+# Board data
 var blocks : Array[Block]
 var move_options : Array[MoveOption]
 var active_block : Block
-
-var grid_pixel_size : Vector2
-var origin_offset : Vector2
 
 func _ready():
 	# Place center of board at point
@@ -186,14 +188,15 @@ func apply_move(dir: Vector2i):
 				block.set_type("x")
 			else:
 				block.set_type("o")
+			
+			
 			var winner := win_manager.check_win(
 				grid_size,
 				Callable(self, "get_type_at")
 			)
-
 			if winner != Block.Type.EMPTY:
 				print("Winner:", "Player 1 (X)" if winner == Block.Type.X else "Player 2 (O)")
-				# TODO: lock board, show UI, etc.
+				play_state_manager.set_board_locked(true)
 				
 			play_state_manager.change_turn()
 			block.reset_block_attributes()
@@ -213,7 +216,6 @@ func get_type_at(pos: Vector2i) -> int:
 			return block.type
 	return Block.Type.EMPTY
 
-	
 func sort_by_x(a, b):
 	return a.grid_pos.x < b.grid_pos.x
 
@@ -247,13 +249,13 @@ func _on_block_deselected():
 		move_option.enabled = false
 		
 func _on_move_option_selected(dir: Vector2i):
+	# Move blocks
 	apply_move(dir)
-
+	
 	# Reactivate blocks
 	for block in blocks:
-		var size := block.invalid_dirs.size()
-		block.selectable = size > 0 and size < 4
 		block.update_button_status()
-
+	
+	# Disable move options
 	for move_option in move_options:
 		move_option.enabled = false
